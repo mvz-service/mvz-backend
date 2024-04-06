@@ -1,6 +1,7 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const path = require('path');
 const cors = require('cors');
 const puppeteer = require('puppeteer'); // 웹 크롤링을 위한 puppeteer 라이브러리
 const sharp = require('sharp');
@@ -12,6 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors()); // cors 설정
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/',(req,res)=>{
+    res.render('index');
+})
 
 // 영화 슬라이드형식 포스터
 app.get('/slide/poster/:moviecode', async (req,res)=>{
